@@ -1,11 +1,19 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-  $END$
+  <div>
+    <h1>Todo List</h1>
+    <AddTodo />
+    <TodoList />
+  </div>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import AddTodo from '@/components/AddTodo.vue'
+import TodoList from '@/components/TodoList.vue'
+</script>
 
+<style scoped>
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
 </style>

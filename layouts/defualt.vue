@@ -1,11 +1,82 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-  $END$
+  <div>
+    <header>
+      <nav>
+        <NuxtLink to="/">Home</NuxtLink>
+        <NuxtLink to="/login">Login</NuxtLink>
+        <NuxtLink to="/register">Register</NuxtLink>
+        <button v-if="isAuthenticated" @click="logout">Logout</button>
+      </nav>
+    </header>
+    <main>
+      <NuxtPage />
+    </main>
+    <footer>
+      <p>© 2023 Your Company</p>
+    </footer>
+  </div>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
+const userStore = useUserStore()
+const { isAuthenticated } = storeToRefs(userStore)
+
+const logout = () => {
+  userStore.logout()
+}
+</script>
+
+<style scoped>
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e60000;
+}
+
+main {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
 </style>
