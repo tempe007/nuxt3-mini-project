@@ -8,18 +8,18 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import { Todo } from '@/stores/todo'
 import { useTodoStore } from '@/stores/todo'
+import type { Todo } from "~/types/Todo";
 
 const props = defineProps<{ todo: Todo }>()
 
 const todoStore = useTodoStore()
 
-const toggleTodo = (id: number) => {
+const toggleTodo = (id: string) => {
   todoStore.toggleTodo(id)
 }
 
-const removeTodo = (id: number) => {
+const removeTodo = (id: string) => {
   todoStore.removeTodo(id)
 }
 </script>

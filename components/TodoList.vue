@@ -5,12 +5,19 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useTodoStore } from '@/stores/todo'
-import TodoItem from '@/components/TodoItem.vue'
+import { storeToRefs } from 'pinia';
+import { useTodoStore } from '@/stores/todo';
+import { useUserStore } from '@/stores/user';
+import TodoItem from '@/components/TodoItem.vue';
 
-const todoStore = useTodoStore()
-const { todos } = storeToRefs(todoStore)
+const todoStore = useTodoStore();
+const userStore = useUserStore();
+const { todos } = storeToRefs(todoStore);
+const { user } = storeToRefs(userStore);
+
+onMounted(() => {
+  todoStore.getTodos(user.value.uid);
+});
 </script>
 
 <style scoped>

@@ -1,40 +1,50 @@
 import { defineStore } from 'pinia'
-
-export interface Todo {
-    id: number
-    text: string
-    completed: boolean
-    comments: string[]
-}
-
-interface TodoState {
-    todos: Todo[]
-}
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '@/plugins/firebase'
+import type { Todo, TodoState } from "~/types/Todo";
 
 export const useTodoStore = defineStore('todo', {
     state: (): TodoState => ({
         todos: []
     }),
     actions: {
+        async getTodos(uid) {
+            this.todos = [];
+            const querySnapshot = await getDocs(collection(db, 'todos'));
+            querySnapshot.forEach((doc) => {
+                if(uid === doc.data().uid) {
+                    let todo : Todo = {
+                        id: doc.id,
+                        text: doc.data().text,
+                        uid: doc.data().uid,
+                        completed: false,
+                        comments: []
+                    };
+                    this.todos.push(todo);
+                }
+            })
+
+        },
         addTodo(text: string) {
-            const newTodo: Todo = {
-                id: Date.now(),
+            const newTodo : Todo = {
+                id: "",
                 text,
+                uid: "",
                 completed: false,
                 comments: []
             }
             this.todos.push(newTodo)
         },
-        toggleTodo(id: number) {
+        toggleTodo(id: string) {
             const todo = this.todos.find(todo => todo.id === id)
             if (todo) {
                 todo.completed = !todo.completed
             }
         },
-        removeTodo(id: number) {
+        removeTodo(id: string) {
             this.todos = this.todos.filter(todo => todo.id !== id)
         },
-        addComment(id: number, comment: string) {
+        addComment(id: string, comment: string) {
             const todo = this.todos.find(todo => todo.id === id)
             if (todo) {
                 todo.comments.push(comment)
