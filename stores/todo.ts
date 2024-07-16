@@ -8,7 +8,7 @@ export const useTodoStore = defineStore('todo', {
         todos: []
     }),
     actions: {
-        async getTodos(uid) {
+        async getTodos(uid: string) {
             this.todos = [];
             const querySnapshot = await getDocs(collection(db, 'todos'));
             querySnapshot.forEach((doc) => {

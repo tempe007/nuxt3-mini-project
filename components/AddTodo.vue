@@ -14,7 +14,7 @@ const todoStore = useTodoStore()
 
 const addTodo = async () => {
   if (newTodo.value.trim() !== '') {
-    await todoStore.addTodo(newTodo.value)
+    todoStore.addTodo(newTodo.value)
     newTodo.value = ''
   }
 }
