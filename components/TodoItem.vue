@@ -2,7 +2,7 @@
   <li class="shadow">
     <i class="checkBtn fas fa-check"
        :class="{ checkBtnCompleted: todo.completed }"
-       @click="toggleTodo(todo.id)"></i>
+       @click="toggleTodo(todo)"></i>
     <span v-bind:class="{ textCompleted: todo.completed }">
       {{ todo.text }}
     </span>
@@ -23,8 +23,8 @@ const props = defineProps<{ todo: Todo }>();
 const todoStore = useTodoStore();
 const userStore = useUserStore();
 
-const toggleTodo = (id: string) => {
-  todoStore.toggleTodo(id)
+const toggleTodo = (todo: Todo) => {
+  todoStore.toggleTodo(todo, userStore.user.uid);
 }
 
 const removeTodo = (id: string) => {

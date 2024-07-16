@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import {collection, getDocs, addDoc, deleteDoc, doc} from "firebase/firestore";
+import {collection, getDocs, addDoc, deleteDoc, doc, updateDoc} from "firebase/firestore";
 import { db } from '@/plugins/firebase'
 import type { Todo, TodoState, AddTodo } from "~/types/Todo";
 
@@ -17,7 +17,7 @@ export const useTodoStore = defineStore('todo', {
                         id: doc.id,
                         text: doc.data().text,
                         uid: doc.data().uid,
-                        completed: false,
+                        completed: doc.data().completed,
                         comments: []
                     };
                     this.todos.push(todo);
@@ -40,11 +40,24 @@ export const useTodoStore = defineStore('todo', {
                 alert("할 일 등록 실패");
             }
         },
-        toggleTodo(id: string) {
-            const todo = this.todos.find(todo => todo.id === id)
-            if (todo) {
-                todo.completed = !todo.completed
-            }
+        async toggleTodo(todo: Todo, uid: string) {
+              try {
+                  const docRef = doc(db, 'todos', todo.id);
+                  const updateTodo = {
+                      text: todo.text,
+                      uid: todo.uid,
+                      completed: !todo.completed,
+                      comments: todo.comments
+                  };
+
+                  await updateDoc(docRef, updateTodo);
+                  await this.getTodos(uid);
+              } catch (e) {
+                  console.error(e);
+                  alert("할 일 수정 실패");
+              }
+
+
         },
         async removeTodo(id: string, uid: string) {
             try {
