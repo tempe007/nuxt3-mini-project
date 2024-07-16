@@ -3,9 +3,6 @@ import { getAuth , type Auth} from 'firebase/auth';
 import { getFirestore ,Firestore} from "firebase/firestore";
 import { useRuntimeConfig } from "#app";
 
-
-
-
 interface FirebaseConfig {
   apiKey : string;
   authDomain : string;
@@ -36,6 +33,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Provide the auth and db instances to the app
   nuxtApp.provide('auth', auth);
   nuxtApp.provide('db', db);
-
 });
 export { auth, db };
