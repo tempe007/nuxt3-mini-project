@@ -1,7 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from "firebase/firestore";
+import { getAuth , type Auth} from 'firebase/auth';
+import { getFirestore ,Firestore} from "firebase/firestore";
 import { useRuntimeConfig } from "#app";
+
+
+
 
 interface FirebaseConfig {
   apiKey : string;
@@ -12,6 +15,8 @@ interface FirebaseConfig {
   appId : string
 }
 
+let auth: Auth;
+let db: Firestore;
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig();
   const firebaseConfig : FirebaseConfig = {
@@ -22,12 +27,15 @@ export default defineNuxtPlugin((nuxtApp) => {
     messagingSenderId: config.public.firebaseMessagingSenderId,
     appId: config.public.firebaseAppId,
   };
-
-  // Firebase 초기화
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
 
+// Firebase 인증과 Firestore 서비스 초기화
+  auth = getAuth(app);
+  db = getFirestore(app);
+
+  // Provide the auth and db instances to the app
   nuxtApp.provide('auth', auth);
   nuxtApp.provide('db', db);
+
 });
+export { auth, db };

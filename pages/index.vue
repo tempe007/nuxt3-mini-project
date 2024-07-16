@@ -7,6 +7,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: 'auth'
+})
+
 import AddTodo from '@/components/AddTodo.vue'
 import TodoList from '@/components/TodoList.vue'
 </script>
