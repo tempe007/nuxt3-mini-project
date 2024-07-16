@@ -13,20 +13,22 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-import { useTodoStore } from '@/stores/todo'
+import { defineProps } from 'vue';
+import { useTodoStore } from '@/stores/todo';
+import { useUserStore } from '@/stores/user';
 import type { Todo } from "~/types/Todo";
 
-const props = defineProps<{ todo: Todo }>()
+const props = defineProps<{ todo: Todo }>();
 
-const todoStore = useTodoStore()
+const todoStore = useTodoStore();
+const userStore = useUserStore();
 
 const toggleTodo = (id: string) => {
   todoStore.toggleTodo(id)
 }
 
 const removeTodo = (id: string) => {
-  todoStore.removeTodo(id)
+  todoStore.removeTodo(id, userStore.user.uid)
 }
 </script>
 
