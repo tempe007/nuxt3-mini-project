@@ -12,7 +12,7 @@
       <NuxtPage />
     </main>
     <footer>
-      <p>© 2023 Your Company</p>
+      <p>© 2024 mini project (올리버,루이스)</p>
     </footer>
   </div>
 </template>
@@ -31,7 +31,7 @@ const logout = () => {
 
 <style scoped>
 header {
-  background-color: #007bff;
+  background-color: #008cff;
   color: white;
   padding: 10px 0;
   text-align: center;
@@ -50,7 +50,7 @@ nav a {
 
 button {
   padding: 5px 10px;
-  background-color: #ff4d4d;
+  background-color: #868181;
   color: white;
   border: none;
   border-radius: 4px;
@@ -71,7 +71,7 @@ main {
 }
 
 footer {
-  background-color: #007bff;
+  background-color: #d000ff;
   color: white;
   padding: 10px 0;
   text-align: center;
