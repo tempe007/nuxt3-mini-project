@@ -1,9 +1,15 @@
 <template>
-  <div class="todo-item">
-    <input type="checkbox" v-model="todo.completed" @change="toggleTodo(todo.id)" />
-    <span :class="{ 'line-through': todo.completed }">{{ todo.text }}</span>
-    <button @click="removeTodo(todo.id)">Remove</button>
-  </div>
+  <li class="shadow">
+    <i class="checkBtn fas fa-check"
+       :class="{ checkBtnCompleted: todo.completed }"
+       @click="toggleTodo(todo.id)"></i>
+    <span v-bind:class="{ textCompleted: todo.completed }">
+      {{ todo.text }}
+    </span>
+    <span class="removeBtn" @click="removeTodo(todo.id)">
+      <i class="fas fa-trash-alt"></i>
+    </span>
+  </li>
 </template>
 
 <script setup lang="ts">
@@ -25,13 +31,38 @@ const removeTodo = (id: string) => {
 </script>
 
 <style scoped>
-.todo-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
+li {
+  display: flex;
+  min-height: 50px;
+  height: 50px;
+  line-height: 50px;
+  margin: 0.5rem 0;
+  padding: 0 0.9rem;
+  background: #FFFFFF;
   border-radius: 5px;
 }
-.line-through {
+
+.removeBtn {
+  margin-left: auto;
+  color: #de4343;
+}
+
+.checkBtn {
+  line-height: 45px;
+  color: #62acde;
+  margin-right: 5px;
+}
+
+.checkBtnCompleted {
+  color: #b3adad;
+}
+
+.textCompleted {
   text-decoration: line-through;
+  color: #b3adad;
+}
+
+.shadow {
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
 </style>
