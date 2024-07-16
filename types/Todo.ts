@@ -9,3 +9,10 @@ export interface Todo {
 export interface TodoState {
     todos: Todo[];
 }
+
+export interface AddTodo {
+    text: string;
+    uid: string;
+    completed: boolean;
+    comments: string[];
+}

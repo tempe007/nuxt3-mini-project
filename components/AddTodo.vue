@@ -8,15 +8,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useTodoStore } from '@/stores/todo'
+import { ref } from 'vue';
+import { useTodoStore } from '@/stores/todo';
+import { useUserStore } from "~/stores/user";
 
-const newTodo = ref('')
-const todoStore = useTodoStore()
+const newTodo = ref('');
+const todoStore = useTodoStore();
+const userStore = useUserStore();
 
-const addTodo = async () => {
+const addTodo = () => {
   if (newTodo.value.trim() !== '') {
-    todoStore.addTodo(newTodo.value)
+    todoStore.addTodo(newTodo.value, userStore.user.uid);
     newTodo.value = ''
   }
 }
@@ -46,6 +48,7 @@ input:focus {
   display: block;
   width: 3rem;
   border-radius: 0 5px 5px 0;
+  cursor: pointer;
 }
 
 .addBtn {
