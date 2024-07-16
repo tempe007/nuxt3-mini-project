@@ -12,7 +12,7 @@ interface FirebaseConfig {
   appId : string
 }
 
-export default defineNuxtPlugin((nuxtApp) => {
+export const firebaseApp = () => {
   const config = useRuntimeConfig();
   const firebaseConfig : FirebaseConfig = {
     apiKey: config.public.firebaseApiKey,
@@ -28,6 +28,14 @@ export default defineNuxtPlugin((nuxtApp) => {
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  nuxtApp.provide('auth', auth);
+  return { app, auth, db };
+}
+
+export default defineNuxtPlugin((nuxtApp) => {
+  const { db, auth } = firebaseApp();
   nuxtApp.provide('db', db);
+  nuxtApp.provide('auth', auth);
 });
+
+export class auth {
+}
