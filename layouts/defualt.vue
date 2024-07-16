@@ -3,8 +3,8 @@
     <header>
       <nav>
         <NuxtLink to="/">Home</NuxtLink>
-        <NuxtLink to="/login">Login</NuxtLink>
-        <NuxtLink to="/register">Register</NuxtLink>
+        <NuxtLink v-if="!isAuthenticated" to="/login">Login</NuxtLink>
+        <NuxtLink v-if="!isAuthenticated" to="/register">Register</NuxtLink>
         <button v-if="isAuthenticated" @click="logout">Logout</button>
       </nav>
     </header>
