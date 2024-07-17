@@ -1,10 +1,10 @@
 <template>
   <li class="shadow">
-    <i class="checkBtn fas fa-check"
-       :class="{ checkBtnCompleted: todo.completed }"
+    <i class="checkBtn fas"
+       :class="[priorityClass, { checkBtnCompleted: todo.completed }]"
        @click="toggleTodo(todo)"></i>
     <span v-bind:class="{ textCompleted: todo.completed }">
-      [ 우선순위: {{ priorityText }} ] {{ todo.text }}
+      {{ todo.text }}
     </span>
     <span class="removeBtn" @click="removeTodo(todo.id)">
       <i class="fas fa-trash-alt"></i>
@@ -22,16 +22,14 @@ const props = defineProps<{ todo: Todo }>();
 
 const todoStore = useTodoStore();
 const userStore = useUserStore();
-const priorityText = computed(() => {
+const priorityClass = computed(() => {
   switch (props.todo.priority) {
-    case 1:
-      return 'Low'
-    case 2:
-      return 'Medium'
     case 3:
-      return 'High'
+      return 'fa-battery-quarter'
+    case 2:
+      return 'fa-battery-half'
     default:
-      return 'Unknown'
+      return 'fa-battery-full'
   }
 })
 
