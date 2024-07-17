@@ -18,14 +18,17 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 
 const userStore = useUserStore()
 const { isAuthenticated } = storeToRefs(userStore)
+const router = useRouter();
 
 const logout = () => {
-  userStore.logout()
+  userStore.logout();
+  router.push('/login');
 }
 </script>
 
