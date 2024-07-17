@@ -26,7 +26,7 @@ const userStore = useUserStore();
 const formattedDeadline = computed(() => {
   return props.todo.deadline ? new Date(props.todo.deadline).toLocaleDateString() : ''
 })
-const priorityText = computed(() => {
+const priorityClass = computed(() => {
   switch (props.todo.priority) {
     case 3:
       return 'fa-battery-quarter'
