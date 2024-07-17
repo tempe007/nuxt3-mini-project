@@ -8,6 +8,9 @@ export const useTodoStore = defineStore('todo', {
     state: (): TodoState => ({
         todos: []
     }),
+    getters: {
+        isEmptyTodos: (state) : boolean => state.todos.length === 0
+    },
     actions: {
         async getTodos(uid: string) {
             this.todos = [];
@@ -74,6 +77,18 @@ export const useTodoStore = defineStore('todo', {
                 console.error(e);
                 alert("할 일 삭제 실패");
             }
+        },
+        clearTodo(uid: string) {
+            Promise.all(
+                this.todos.map(async todo => {
+                    const docRef = doc(db, 'todos', todo.id);
+                    await deleteDoc(docRef);
+                })
+            ).then(() => {
+                this.getTodos(uid)
+            }).catch(e => {
+                console.error(e);
+            })
         },
         addComment(id: string, comment: string) {
             const todo = this.todos.find(todo => todo.id === id)

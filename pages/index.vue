@@ -3,6 +3,7 @@
     <h1>Todo List</h1>
     <AddTodo />
     <TodoList />
+    <ClearTodo />
   </div>
 </template>
 
