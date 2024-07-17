@@ -6,6 +6,7 @@
     <span v-bind:class="{ textCompleted: todo.completed }">
       [ 우선순위: {{ priorityText }} ] {{ todo.text }}
     </span>
+    <span v-if="todo.deadline"> (Deadline: {{ formattedDeadline }})</span>
     <span class="removeBtn" @click="removeTodo(todo.id)">
       <i class="fas fa-trash-alt"></i>
     </span>
@@ -22,6 +23,9 @@ const props = defineProps<{ todo: Todo }>();
 
 const todoStore = useTodoStore();
 const userStore = useUserStore();
+const formattedDeadline = computed(() => {
+  return props.todo.deadline ? new Date(props.todo.deadline).toLocaleDateString() : ''
+})
 const priorityText = computed(() => {
   switch (props.todo.priority) {
     case 1:

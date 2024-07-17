@@ -6,6 +6,7 @@ export interface Todo {
     priority : number;
     comments: string[];
     createDatetime: Date;
+    deadline: Date | null;
 }
 
 export interface TodoState {
@@ -19,4 +20,5 @@ export interface AddTodo {
     priority : number;
     createDatetime: Date;
     comments: string[];
+    deadline: Date | null;
 }

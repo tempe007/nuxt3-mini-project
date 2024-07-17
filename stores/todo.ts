@@ -25,6 +25,7 @@ export const useTodoStore = defineStore('todo', {
                         priority: doc.data().priority,
                         createDatetime: new Date(doc.data().createDatetime.seconds * 1000),
                         comments: [],
+                        deadline: doc.data().deadline ? doc.data().deadline.toDate() : null
                     };
                     todoList.push(todo);
                 }
@@ -38,7 +39,7 @@ export const useTodoStore = defineStore('todo', {
 
             this.todos = todoList;
         },
-        async addTodo(text: string,priority:number, uid: string) {
+        async addTodo(text: string,priority:number, uid: string,deadline:Date) {
             const newTodo : AddTodo = {
                 text,
                 uid,
@@ -46,6 +47,7 @@ export const useTodoStore = defineStore('todo', {
                 priority,
                 comments: [],
                 createDatetime: new Date(),
+                deadline
             };
             try {
                 await addDoc(collection(db, 'todos'), newTodo);

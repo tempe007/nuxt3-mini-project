@@ -6,6 +6,7 @@
       <option value="2">Medium</option>
       <option value="3">High</option>
     </select>
+    <input type="date" v-model="deadline" />
     <span class="addContainer" @click="addTodo">
       <i class="fas fa-plus addBtn"></i>
     </span>
@@ -20,19 +21,26 @@ import { useUserStore } from "~/stores/user";
 const newTodo = ref('');
 const todoStore = useTodoStore();
 const userStore = useUserStore();
-const priority = ref(1)
+const priority = ref(1);
+const deadline = ref('');
 
 const addTodo = () => {
   if (newTodo.value.trim() !== '') {
-    todoStore.addTodo(newTodo.value, priority.value,  userStore.user!.uid);
-    newTodo.value = ''
+    const deadlineDate = deadline.value ? new Date(deadline.value) : null
+    todoStore.addTodo(newTodo.value, priority.value,  userStore.user!.uid,deadlineDate);
+    newTodo.value = '';
+    priority.value = 1;
+    deadline.value = '';
   }
 }
 </script>
 
 <style scoped>
-input:focus {
-  outline: none;
+input {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .inputBox {
@@ -69,7 +77,7 @@ input:focus {
 
 input {
   border-style: groove;
-  width: 400px;
+  width: 280px;
   height: 50px;
   text-align: center;
 }
