@@ -29,11 +29,11 @@ const formattedDeadline = computed(() => {
 const priorityClass = computed(() => {
   switch (props.todo.priority) {
     case 3:
-      return 'fa-battery-quarter'
+      return 'fa-battery-full'
     case 2:
       return 'fa-battery-half'
     default:
-      return 'fa-battery-full'
+      return 'fa-battery-quarter'
   }
 })
 
