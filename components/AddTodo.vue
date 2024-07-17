@@ -1,7 +1,7 @@
 <template>
   <div class="inputBox shadow">
     <input type="text" v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new todo" />
-    <select v-model="priority">
+    <select v-model.number="priority">
       <option value="1">Low</option>
       <option value="2">Medium</option>
       <option value="3">High</option>

@@ -5,6 +5,7 @@ export interface Todo {
     completed: boolean;
     priority : number;
     comments: string[];
+    createDatetime: Date;
 }
 
 export interface TodoState {
@@ -16,5 +17,6 @@ export interface AddTodo {
     uid: string;
     completed: boolean;
     priority : number;
+    createDatetime: Date;
     comments: string[];
 }

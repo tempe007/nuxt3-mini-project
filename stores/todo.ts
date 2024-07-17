@@ -13,7 +13,7 @@ export const useTodoStore = defineStore('todo', {
     },
     actions: {
         async getTodos(uid: string) {
-            this.todos = [];
+            const todoList : Todo[] = [];
             const querySnapshot = await getDocs(query(collection(db, 'todos') as unknown as Query<DocumentData>));
             querySnapshot.forEach((doc) => {
                 if(uid === doc.data().uid) {
@@ -23,23 +23,29 @@ export const useTodoStore = defineStore('todo', {
                         uid: doc.data().uid,
                         completed: doc.data().completed,
                         priority: doc.data().priority,
+                        createDatetime: new Date(doc.data().createDatetime.seconds * 1000),
                         comments: [],
-                     //   createdAt : doc.data().createdAt.toDate()
                     };
-                    this.todos.push(todo);
+                    todoList.push(todo);
                 }
-            })
+            });
 
+            todoList.sort((a : Todo, b : Todo) =>
+                // 완료된 할 일을 뒷 부분에 정렬한 다음 우선순위 > 최근 등록일시 순으로 정렬함
+                a.completed - b.completed ||
+                b.priority - a.priority ||
+                b.createDatetime - a.createDatetime);
+
+            this.todos = todoList;
         },
         async addTodo(text: string,priority:number, uid: string) {
-            const createdAt = new Date()
             const newTodo : AddTodo = {
                 text,
                 uid,
                 completed: false,
                 priority,
                 comments: [],
-                //createdAt
+                createDatetime: new Date(),
             };
             try {
                 await addDoc(collection(db, 'todos'), newTodo);
