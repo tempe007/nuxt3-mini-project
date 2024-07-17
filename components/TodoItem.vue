@@ -38,11 +38,11 @@ const priorityClass = computed(() => {
 })
 
 const toggleTodo = (todo: Todo) => {
-  todoStore.toggleTodo(todo, userStore.user.uid);
+  todoStore.toggleTodo(todo, userStore.user!.uid);
 }
 
 const removeTodo = (id: string) => {
-  todoStore.removeTodo(id, userStore.user.uid)
+  todoStore.removeTodo(id, userStore.user!.uid)
 }
 </script>
 
