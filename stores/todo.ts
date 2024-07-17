@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import {collection, getDocs, addDoc, deleteDoc, doc, updateDoc} from "firebase/firestore";
+import {collection,Query, type DocumentData, getDocs, addDoc, deleteDoc, doc, updateDoc,query, orderBy,} from "firebase/firestore";
 import { db } from '@/plugins/firebase'
 import type { Todo, TodoState, AddTodo } from "~/types/Todo";
+
 
 export const useTodoStore = defineStore('todo', {
     state: (): TodoState => ({
@@ -10,7 +11,7 @@ export const useTodoStore = defineStore('todo', {
     actions: {
         async getTodos(uid: string) {
             this.todos = [];
-            const querySnapshot = await getDocs(collection(db, 'todos'));
+            const querySnapshot = await getDocs(query(collection(db, 'todos') as unknown as Query<DocumentData>));
             querySnapshot.forEach((doc) => {
                 if(uid === doc.data().uid) {
                     let todo : Todo = {
@@ -18,19 +19,24 @@ export const useTodoStore = defineStore('todo', {
                         text: doc.data().text,
                         uid: doc.data().uid,
                         completed: doc.data().completed,
-                        comments: []
+                        priority: doc.data().priority,
+                        comments: [],
+                     //   createdAt : doc.data().createdAt.toDate()
                     };
                     this.todos.push(todo);
                 }
             })
 
         },
-        async addTodo(text: string, uid: string) {
+        async addTodo(text: string,priority:number, uid: string) {
+            const createdAt = new Date()
             const newTodo : AddTodo = {
                 text,
                 uid,
                 completed: false,
-                comments: []
+                priority,
+                comments: [],
+                //createdAt
             };
             try {
                 await addDoc(collection(db, 'todos'), newTodo);

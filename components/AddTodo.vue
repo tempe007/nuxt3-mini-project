@@ -1,6 +1,11 @@
 <template>
   <div class="inputBox shadow">
     <input type="text" v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new todo" />
+    <select v-model="priority">
+      <option value="1">Low</option>
+      <option value="2">Medium</option>
+      <option value="3">High</option>
+    </select>
     <span class="addContainer" @click="addTodo">
       <i class="fas fa-plus addBtn"></i>
     </span>
@@ -15,10 +20,11 @@ import { useUserStore } from "~/stores/user";
 const newTodo = ref('');
 const todoStore = useTodoStore();
 const userStore = useUserStore();
+const priority = ref(1)
 
 const addTodo = () => {
   if (newTodo.value.trim() !== '') {
-    todoStore.addTodo(newTodo.value, userStore.user.uid);
+    todoStore.addTodo(newTodo.value, priority.value,  userStore.user!.uid);
     newTodo.value = ''
   }
 }
@@ -70,5 +76,12 @@ input {
 
 .shadow {
   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+}
+
+select {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>

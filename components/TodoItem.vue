@@ -4,7 +4,7 @@
        :class="{ checkBtnCompleted: todo.completed }"
        @click="toggleTodo(todo)"></i>
     <span v-bind:class="{ textCompleted: todo.completed }">
-      {{ todo.text }}
+      [ 우선순위: {{ priorityText }} ] {{ todo.text }}
     </span>
     <span class="removeBtn" @click="removeTodo(todo.id)">
       <i class="fas fa-trash-alt"></i>
@@ -22,6 +22,18 @@ const props = defineProps<{ todo: Todo }>();
 
 const todoStore = useTodoStore();
 const userStore = useUserStore();
+const priorityText = computed(() => {
+  switch (props.todo.priority) {
+    case 1:
+      return 'Low'
+    case 2:
+      return 'Medium'
+    case 3:
+      return 'High'
+    default:
+      return 'Unknown'
+  }
+})
 
 const toggleTodo = (todo: Todo) => {
   todoStore.toggleTodo(todo, userStore.user.uid);
@@ -66,5 +78,8 @@ li {
 
 .shadow {
   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+}
+.line-through {
+  text-decoration: line-through;
 }
 </style>
