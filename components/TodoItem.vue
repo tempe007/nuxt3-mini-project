@@ -3,10 +3,10 @@
     <i class="checkBtn fas"
        :class="[priorityClass, { checkBtnCompleted: todo.completed }]"
        @click="toggleTodo(todo)"></i>
-    <span v-bind:class="{ textCompleted: todo.completed }">
+    <span :class="[{ textCompleted: todo.completed }, { expired: isExpired }]">
       {{ todo.text }}
     </span>
-    <span v-if="todo.deadline"> (Deadline: {{ formattedDeadline }})</span>
+    <span v-if="todo.deadline" :class="[{ textCompleted: todo.completed }, { expired: isExpired }]"> (Deadline: {{ formattedDeadline }})</span>
     <span class="removeBtn" @click="removeTodo(todo.id)">
       <i class="fas fa-trash-alt"></i>
     </span>
@@ -26,6 +26,12 @@ const userStore = useUserStore();
 const formattedDeadline = computed(() => {
   return props.todo.deadline ? new Date(props.todo.deadline).toLocaleDateString() : ''
 })
+
+const isExpired = computed(() => {
+  const today = new Date();
+  return !props.todo.completed && (props.todo.deadline < today);
+});
+
 const priorityClass = computed(() => {
   switch (props.todo.priority) {
     case 3:
@@ -85,5 +91,9 @@ li {
 }
 .line-through {
   text-decoration: line-through;
+}
+
+.expired {
+  color: #aa0000;
 }
 </style>
