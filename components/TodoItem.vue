@@ -4,9 +4,9 @@
        :class="[priorityClass, { checkBtnCompleted: todo.completed }]"
        @click="toggleTodo(todo)"></i>
     <span :class="[{ textCompleted: todo.completed }, { expired: isExpired }]">
-      {{ todo.text }}
+      {{ todo.text }}&nbsp;
     </span>
-    <span v-if="todo.deadline" :class="[{ textCompleted: todo.completed }, { expired: isExpired }]"> (Deadline: {{ formattedDeadline }})</span>
+    <span v-if="todo.deadline" :class="[{ textCompleted: todo.completed }, { expired: isExpired }]"> [ Deadline: {{ formattedDeadline }} ]</span>
     <span class="removeBtn" @click="removeTodo(todo.id)">
       <i class="fas fa-trash-alt"></i>
     </span>
