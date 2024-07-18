@@ -3,6 +3,7 @@
     <header>
       <nav>
         <NuxtLink to="/">Home</NuxtLink>
+        <NuxtLink v-if="isAuthenticated" to="/board">게시판</NuxtLink>
         <NuxtLink v-if="!isAuthenticated" to="/login">Login</NuxtLink>
         <NuxtLink v-if="!isAuthenticated" to="/register">Register</NuxtLink>
         <button v-if="isAuthenticated" @click="logout">Logout</button>
