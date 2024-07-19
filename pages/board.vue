@@ -6,6 +6,7 @@
       <div class="post-header">
         <h2>{{ post.title }}</h2>
         <p class="date">{{ post.date }}</p>
+        <button @click="deletePost(post.id)" class="delete-btn">🗑️</button>
       </div>
       <p>{{ post.content }}</p>
     </div>
@@ -21,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/plugins/firebase';
 
 // Post 인터페이스 정의
@@ -57,6 +58,11 @@ const addPost = async () => {
     newPostContent.value = '';
     fetchPosts(); // 새로운 게시글 추가 후 게시글 목록 갱신
   }
+};
+
+const deletePost = async (id: string) => {
+  await deleteDoc(doc(db, 'posts', id));
+  fetchPosts(); // 게시글 삭제 후 게시글 목록 갱신
 };
 
 onMounted(() => {
@@ -105,7 +111,7 @@ h2 {
 .date {
   font-size: 0.9em;
   color: #888;
-  margin: 0;
+  margin: 0 10px 0 0;
 }
 
 input, textarea {
@@ -135,5 +141,21 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.delete-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  color: #ff4d4d;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0;
+  margin-left: 10px;
+  width: 100px;
+}
+
+.delete-btn:hover {
+  color: #e60000;
 }
 </style>

@@ -53,6 +53,7 @@ nav a {
 }
 
 button {
+  width: 100px;
   padding: 5px 10px;
   background-color: #868181;
   color: white;
